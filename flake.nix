@@ -9,9 +9,6 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
     devenv.url = "github:cachix/devenv";
-    nix2container.url = "github:nlewo/nix2container";
-    nix2container.inputs.nixpkgs.follows = "nixpkgs";
-    mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
   };
 
   nixConfig = {
@@ -31,11 +28,9 @@
         # module parameters provide easy access to attributes of the same
         # system.
 
-        # Equivalent to  inputs'.nixpkgs.legacyPackages.hello;
-        packages.default = pkgs.hello;
 
         devenv.shells.default = {
-          name = "my-project";
+          name = "cult-dev";
 
           imports = [
             # This is just like the imports in devenv.nix.
@@ -44,13 +39,32 @@
           ];
 
           # https://devenv.sh/reference/options/
-          packages = [ config.packages.default ];
+          packages = with pkgs; [
+            # Haskell development tools
+            stack
+            ghc
+            haskell-language-server
+            hlint
+            fourmolu
+          ];
 
-          enterShell = ''
-            hello
-          '';
+          languages.haskell = {
+            enable = true;
+            package = pkgs.ghc;
+          };
 
-          processes.hello.exec = "hello";
+          env = {
+            # Ensure stack uses system GHC
+            STACK_SYSTEM_GHC = "1";
+            # Configure stack to use Nix
+            STACK_IN_NIX_SHELL = "1";
+          };
+
+          # Use process-compose for cross-platform process management
+          process.manager.implementation = "process-compose";
+          
+          # Disable container generation
+          containers = pkgs.lib.mkForce {};
         };
 
       };
