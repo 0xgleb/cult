@@ -1,0 +1,2 @@
+# cult
+Haskell cult indoctrination
