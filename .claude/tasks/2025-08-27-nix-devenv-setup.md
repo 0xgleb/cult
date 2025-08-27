@@ -37,13 +37,19 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
 - Generated `flake.lock` with all input dependencies pinned
 - Basic flake evaluation works (minor platform-specific package issue doesn't affect core functionality)
 
-### Section 2: Haskell Development Environment
-- [ ] Add Stack package manager (latest LTS resolver)
-- [ ] Configure GHC compiler with common language extensions
-- [ ] Add Haskell Language Server (HLS) for IDE support
-- [ ] Include hlint for static analysis and linting
-- [ ] Add fourmolu for consistent code formatting
-- [ ] Configure PATH and environment variables for Haskell tools
+### Section 2: Haskell Development Environment ✅
+- [x] Add Stack package manager (latest LTS resolver)
+- [x] Configure GHC compiler with common language extensions
+- [x] Add Haskell Language Server (HLS) for IDE support
+- [x] Include hlint for static analysis and linting
+- [x] Add fourmolu for consistent code formatting
+- [x] Configure PATH and environment variables for Haskell tools
+
+**Implementation Details:**
+- Added comprehensive Haskell toolchain including stack, ghc, haskell-language-server, hlint, and fourmolu to packages
+- Configured `languages.haskell` with GHC as the main compiler package
+- Set environment variables `STACK_SYSTEM_GHC=1` and `STACK_IN_NIX_SHELL=1` for proper Stack/Nix integration
+- All tools are now available in the development environment and properly configured for Haskell development
 
 ### Section 3: TypeScript Development Environment
 - [ ] Add Node.js LTS version (latest stable)
