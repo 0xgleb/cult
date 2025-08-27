@@ -46,18 +46,24 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
 - [x] Configure PATH and environment variables for Haskell tools
 
 **Implementation Details:**
-- Added comprehensive Haskell toolchain including stack, ghc, haskell-language-server, hlint, and fourmolu to packages
-- Configured `languages.haskell` with GHC as the main compiler package
+- Configured `languages.haskell` with GHC as the main compiler package (automatically provides Stack and Haskell Language Server)
+- Added hlint and fourmolu as manual packages since they're not included in the language configuration
 - Set environment variables `STACK_SYSTEM_GHC=1` and `STACK_IN_NIX_SHELL=1` for proper Stack/Nix integration
 - All tools are now available in the development environment and properly configured for Haskell development
 
-### Section 3: TypeScript Development Environment
-- [ ] Add Node.js LTS version (latest stable)
-- [ ] Include pnpm package manager for dependency management
-- [ ] Add TypeScript compiler for type checking
-- [ ] Configure eslint for JavaScript/TypeScript linting
-- [ ] Add prettier for code formatting
-- [ ] Set up proper NODE_PATH and npm global directories
+### Section 3: TypeScript Development Environment ✅
+- [x] Add Node.js LTS version (latest stable)
+- [x] Include pnpm package manager for dependency management
+- [x] Add TypeScript compiler for type checking
+- [x] Configure eslint for JavaScript/TypeScript linting
+- [x] Add prettier for code formatting
+- [x] Set up proper NODE_PATH and npm global directories
+
+**Implementation Details:**
+- Configured `languages.javascript` with Node.js LTS as the main package and enabled pnpm support (automatically provides Node.js runtime and pnpm package manager)
+- Configured `languages.typescript` to enable TypeScript compiler support (automatically provides TypeScript compiler)
+- Devenv automatically handles PATH configuration for all language tools, keeping environment variables minimal
+- All TypeScript development tools are now available in the development environment with proper configuration
 
 ### Section 4: Pre-commit Hooks Configuration
 - [ ] Integrate git-hooks.nix for declarative pre-commit setup
@@ -75,13 +81,7 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
 - [ ] Add taplo for TOML file formatting and linting
 - [ ] Test pre-commit hook installation and execution
 
-### Section 5: Direnv Integration
-- [ ] Create `.envrc` file with `use flake` directive
-- [ ] Configure nix-direnv for shell caching
-- [ ] Add `.direnv/` to `.gitignore`
-- [ ] Test automatic environment activation
-
-### Section 6: Git Configuration
+### Section 5: Git Configuration
 - [ ] Update `.gitignore` with comprehensive development artifacts:
   - [ ] Nix build outputs (`result`, `result-*`)
   - [ ] Direnv cache (`.direnv/`)
@@ -89,7 +89,7 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
   - [ ] TypeScript/Node artifacts (`node_modules/`, `.pnpm-store/`, `.next/`)
   - [ ] Editor temporary files
 
-### Section 7: Documentation Updates
+### Section 6: Documentation Updates
 - [ ] Update `README.md` with:
   - [ ] Prerequisites section (Nix installation, direnv setup)
   - [ ] Initial setup instructions
@@ -104,7 +104,7 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
   - [ ] Pre-commit hooks management
   - [ ] Environment troubleshooting tips
 
-### Section 8: Testing and Validation
+### Section 7: Testing and Validation
 - [ ] Test complete environment setup from scratch
 - [ ] Verify all tools are accessible and working
 - [ ] Test pre-commit hooks trigger correctly

@@ -28,7 +28,6 @@
         # module parameters provide easy access to attributes of the same
         # system.
 
-
         devenv.shells.default = {
           name = "cult-dev";
 
@@ -38,32 +37,31 @@
             # ./devenv-foo.nix
           ];
 
-          # https://devenv.sh/reference/options/
           packages = with pkgs; [
-            # Haskell development tools
-            stack
-            ghc
-            haskell-language-server
             hlint
             fourmolu
           ];
 
-          languages.haskell = {
-            enable = true;
-            package = pkgs.ghc;
+          languages = {
+            nix.enable = true;
+            haskell = {
+              enable = true;
+              package = pkgs.ghc;
+            };
+            javascript = {
+              enable = true;
+              package = pkgs.nodejs_22;
+              pnpm.enable = true;
+            };
+            typescript.enable = true;
           };
 
           env = {
-            # Ensure stack uses system GHC
             STACK_SYSTEM_GHC = "1";
-            # Configure stack to use Nix
             STACK_IN_NIX_SHELL = "1";
           };
 
-          # Use process-compose for cross-platform process management
           process.manager.implementation = "process-compose";
-          
-          # Disable container generation
           containers = pkgs.lib.mkForce {};
         };
 

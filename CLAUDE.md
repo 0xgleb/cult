@@ -57,6 +57,18 @@ The repository currently contains only documentation files:
 - Curriculum will be adaptive based on student performance
 - Infrastructure will be managed with Nix for reproducible builds
 
+## Development Environment
+
+The project uses Nix Flakes with devenv for reproducible development environments. Key components:
+
+- **Nix Flakes**: Provides declarative, reproducible builds and development environments
+- **devenv**: Simplifies Nix-based development environment configuration
+- **Configuration Reference**: Complete devenv options documented at https://raw.githubusercontent.com/cachix/devenv/refs/heads/main/docs/reference/options.md
+
+The development environment includes Haskell toolchain (GHC, cabal-install, Stack), language servers, and other development tools configured in `devenv.nix`.
+
 ## Next Steps
 
 Implementation should follow the epic structure outlined in ROADMAP.md, starting with the foundational execution engine and basic exercise system before building out the full platform features.
+
+- You MUST never leave comments in the code that explain basic things or try to communicate to the user. Comments are only okay for highly complex constructs and domain-specific peculiarities. Instead of writing comments, consider improving type modeling, using better names, adding tests, and leaving verifiable docstrings with examples
