@@ -49,7 +49,7 @@
             nix.enable = true;
             haskell = {
               enable = true;
-              package = pkgs.ghc;
+              package = pkgs.haskell.compiler.ghc9102;
             };
             javascript = {
               enable = true;

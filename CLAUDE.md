@@ -259,4 +259,12 @@ Implementation should follow the epic structure outlined in @ROADMAP.md, startin
 
 - Prefer self-documenting code through clear types, names, tests, and docstrings. Use comments purposefully for complex logic, design rationale, public API examples, non-obvious decisions, and TODOs when they provide value that cannot be expressed through code alone. Avoid comments that merely restate what the code does or communicate to the user during implementation.
 
+## Haskell Code Style Guidelines
+
+- Use qualified imports with "as" for all modules except Protolude and local imports
+- Use explicit import lists only for operators (both regular and type operators) when needed, not for regular types
+- Prefer `pure` over `return` for applicative contexts
+- Always import Protolude unqualified as it's the project's prelude replacement
+- Enable ImportQualifiedPost extension project-wide for cleaner qualified import syntax
+
 [Effect]: https://effect.website/

@@ -21,6 +21,7 @@ dependencies:
   - protolude
   - servant
   - servant-server
+  - wai
   - warp
 
 default-extensions:
@@ -29,6 +30,7 @@ default-extensions:
   - TypeOperators
   - OverloadedStrings
   - DeriveGeneric
+  - ImportQualifiedPost
 
 library:
   source-dirs: src
