@@ -257,6 +257,6 @@ The development environment is designed to be completely reproducible across dif
 
 Implementation should follow the epic structure outlined in @ROADMAP.md, starting with the foundational execution engine and basic exercise system before building out the full platform features.
 
-- You MUST never leave comments in the code that explain basic things or try to communicate to the user. Comments are only okay for highly complex constructs and domain-specific peculiarities. Instead of writing comments, consider improving type modeling, using better names, adding tests, and leaving verifiable docstrings with examples
+- Prefer self-documenting code through clear types, names, tests, and docstrings. Use comments purposefully for complex logic, design rationale, public API examples, non-obvious decisions, and TODOs when they provide value that cannot be expressed through code alone. Avoid comments that merely restate what the code does or communicate to the user during implementation.
 
 [Effect]: https://effect.website/
