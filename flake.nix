@@ -80,9 +80,6 @@
 
             # YAML formatting
             yamlfmt.enable = true;
-
-            # Markdown
-            taplo.enable = true;
           };
 
           process.manager.implementation = "process-compose";
