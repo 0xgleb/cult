@@ -15,13 +15,8 @@ Before getting started, you'll need:
 2. **direnv** for automatic environment activation:
 
    ```bash
-   # On macOS (via Homebrew)
-   brew install direnv
-
-   # On Linux (via package manager)
-   # Ubuntu/Debian: apt install direnv
-   # Arch: pacman -S direnv
-   # Fedora: dnf install direnv
+   # Install via Nix (recommended for consistency with project setup)
+   nix profile install nixpkgs#direnv
    ```
 
 3. **Configure direnv** in your shell (add to `~/.bashrc`, `~/.zshrc`, etc.):
