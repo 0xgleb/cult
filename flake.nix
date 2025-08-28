@@ -77,9 +77,6 @@
             # TypeScript/JavaScript hooks
             prettier.enable = true;
             eslint.enable = true;
-
-            # YAML formatting
-            yamlfmt.enable = true;
           };
 
           process.manager.implementation = "process-compose";

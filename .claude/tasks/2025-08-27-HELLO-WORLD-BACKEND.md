@@ -43,23 +43,23 @@ Will be configured at project level in package.yaml:
 
 ## Implementation Tasks
 
-## 1. Initialize Stack Project
+## Task 1. Initialize Stack Project
 
-- [ ] Initialize Stack project in root directory
-- [ ] Create package.yaml with proper configuration
-- [ ] Set up stack.yaml with LTS resolver
-- [ ] Create directory structure (app/, src/, test/)
+- [x] Initialize Stack project in root directory
+- [x] Create package.yaml with proper configuration
+- [x] Set up stack.yaml with LTS resolver
+- [x] Create directory structure (app/, src/, test/)
 
 ### Details:
 
-- Use latest LTS resolver (e.g., lts-22.x)
+- Use latest LTS resolver (lts-24.7)
 - Configure package name as "cult"
 - Add protolude, servant, servant-server, warp as dependencies
 - Add hspec, hspec-discover, hspec-wai, servant-client for testing
 - Configure language extensions at package level including NoImplicitPrelude
 - Set hspec-discover as test build tool
 
-## 2. Implement Server Module
+## Task 2. Implement Server Module
 
 - [ ] Create src/Server.hs with API and implementation colocated
 - [ ] Define API type using Servant DSL
@@ -96,7 +96,7 @@ app :: Application
 app = serve helloAPI server
 ```
 
-## 3. Create Application Entry Point
+## Task 3. Create Application Entry Point
 
 - [ ] Set up app/Main.hs
 - [ ] Configure port (default 8080)
@@ -118,7 +118,7 @@ main = do
   run 8080 app
 ```
 
-## 4. Write Unit Tests with Auto-Discovery
+## Task 4. Write Unit Tests with Auto-Discovery
 
 - [ ] Create test/Spec.hs for hspec-discover auto-discovery
 - [ ] Create test/ServerSpec.hs with actual tests
@@ -154,7 +154,7 @@ spec = with (return app) $ do
       get "/hello" `shouldRespondWith` "Hello World" {matchStatus = 200}
 ```
 
-## 6. Update README.md
+## Task 6. Update README.md
 
 - [ ] Add section for backend development
 - [ ] Document how to build the project
@@ -187,7 +187,7 @@ Server will start on http://localhost:8080
 - Run tests before committing changes
 ```
 
-## 7. Update CLAUDE.md
+## Task 7. Update CLAUDE.md
 
 - [ ] Add backend-specific development commands
 - [ ] Document strict testing requirements

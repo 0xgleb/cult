@@ -1,0 +1,61 @@
+name: cult
+version: 0.1.0.0
+github: "0xgleb/cult"
+license: BSD3
+author: "0xgleb"
+maintainer: "0xgleb@example.com"
+copyright: "2025 0xgleb"
+
+extra-source-files:
+  - README.md
+  - ROADMAP.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+description: A Haskell learning platform for Rust developers
+
+dependencies:
+  - base >= 4.7 && < 5
+  - protolude
+  - servant
+  - servant-server
+  - warp
+
+default-extensions:
+  - NoImplicitPrelude
+  - DataKinds
+  - TypeOperators
+  - OverloadedStrings
+  - DeriveGeneric
+
+library:
+  source-dirs: src
+
+executables:
+  cult-exe:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - cult
+
+tests:
+  cult-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - cult
+      - hspec
+      - hspec-wai
+      - servant-client
+    build-tools:
+      - hspec-discover
