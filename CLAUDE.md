@@ -32,7 +32,7 @@ This is "cult" - a Haskell learning platform designed to help Rust developers tr
 Based on the roadmap, the system will have three main components:
 
 1. **Haskell Backend**: Servant-based API with three-layer architecture (domain, application, infrastructure)
-2. **React Frontend**: TypeScript with Effect library and shadcn UI components  
+2. **React Frontend**: TypeScript with Effect library and shadcn UI components
 3. **In-Browser Haskell Execution**: GHC WebAssembly backend for running Haskell in the browser
 
 ## Technology Stack (Planned)
@@ -45,6 +45,7 @@ Based on the roadmap, the system will have three main components:
 ## Current State
 
 The repository currently contains only documentation files:
+
 - `README.md`: Basic project description
 - `ROADMAP.md`: Comprehensive implementation plan with 8 epics covering execution engine, exercise system, backend API, frontend, infrastructure, analytics, advanced features, and community features
 - No source code has been implemented yet

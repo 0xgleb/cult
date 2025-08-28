@@ -7,12 +7,14 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
 ## Design Decisions
 
 ### Why devenv.sh over plain Nix flake?
+
 - Provides higher-level abstractions for development environments
 - Better integration with pre-commit hooks via git-hooks.nix
 - Cleaner configuration for language-specific tooling
 - Built-in support for services and processes
 
 ### Tool Selection Rationale
+
 - **Stack**: Industry standard for Haskell project management, better than cabal for complex projects
 - **fourmolu**: Maintained fork of ormolu with better configuration options
 - **pnpm**: Faster and more efficient than npm/yarn for TypeScript projects
@@ -23,12 +25,14 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
 ## Implementation Plan
 
 ### Section 1: Core Nix Flake Setup ✅
+
 - [x] Create `flake.nix` with devenv.sh input
-- [x] Configure nixpkgs and devenv inputs with latest stable versions  
+- [x] Configure nixpkgs and devenv inputs with latest stable versions
 - [x] Set up basic devShell output structure
 - [x] Test basic flake evaluation with `nix flake check --impure`
 
 **Implementation Details:**
+
 - Used `nix flake init -t github:cachix/devenv#flake-parts` to initialize with proper flake-parts template
 - Template automatically configured nixpkgs, devenv, flake-parts, and other required inputs
 - Generated proper devShell structure with devenv.shells.default configuration
@@ -38,6 +42,7 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
 - Basic flake evaluation works (minor platform-specific package issue doesn't affect core functionality)
 
 ### Section 2: Haskell Development Environment ✅
+
 - [x] Add Stack package manager (latest LTS resolver)
 - [x] Configure GHC compiler with common language extensions
 - [x] Add Haskell Language Server (HLS) for IDE support
@@ -46,12 +51,14 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
 - [x] Configure PATH and environment variables for Haskell tools
 
 **Implementation Details:**
+
 - Configured `languages.haskell` with GHC as the main compiler package (automatically provides Stack and Haskell Language Server)
 - Added hlint and fourmolu as manual packages since they're not included in the language configuration
 - Set environment variables `STACK_SYSTEM_GHC=1` and `STACK_IN_NIX_SHELL=1` for proper Stack/Nix integration
 - All tools are now available in the development environment and properly configured for Haskell development
 
 ### Section 3: TypeScript Development Environment ✅
+
 - [x] Add Node.js LTS version (latest stable)
 - [x] Include pnpm package manager for dependency management
 - [x] Add TypeScript compiler for type checking
@@ -60,28 +67,44 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
 - [x] Set up proper NODE_PATH and npm global directories
 
 **Implementation Details:**
+
 - Configured `languages.javascript` with Node.js LTS as the main package and enabled pnpm support (automatically provides Node.js runtime and pnpm package manager)
 - Configured `languages.typescript` to enable TypeScript compiler support (automatically provides TypeScript compiler)
 - Devenv automatically handles PATH configuration for all language tools, keeping environment variables minimal
 - All TypeScript development tools are now available in the development environment with proper configuration
 
-### Section 4: Pre-commit Hooks Configuration
-- [ ] Integrate git-hooks.nix for declarative pre-commit setup
-- [ ] Configure Nix-specific hooks:
-  - [ ] deadnix - detect unused Nix code
-  - [ ] statix - static analysis for Nix expressions
-  - [ ] nixfmt-classic - format Nix code consistently
-  - [ ] nil - Nix language server diagnostics
-- [ ] Configure Haskell hooks:
-  - [ ] fourmolu formatting enforcement
-- [ ] Configure TypeScript/JavaScript hooks:
-  - [ ] prettier formatting for JS/TS/JSON/YAML
-  - [ ] eslint for code quality checks
-- [ ] Add yamlfmt for YAML file formatting
-- [ ] Add taplo for TOML file formatting and linting
-- [ ] Test pre-commit hook installation and execution
+### Section 4: Pre-commit Hooks Configuration ✅
+
+- [x] Integrate git-hooks.nix for declarative pre-commit setup
+- [x] Configure Nix-specific hooks:
+  - [x] deadnix - detect unused Nix code
+  - [x] statix - static analysis for Nix expressions
+  - [x] nixfmt-classic - format Nix code consistently
+  - [x] nil - Nix language server diagnostics
+- [x] Configure Haskell hooks:
+  - [x] fourmolu formatting enforcement
+- [x] Configure TypeScript/JavaScript hooks:
+  - [x] prettier formatting for JS/TS/JSON/YAML
+  - [x] eslint for code quality checks
+- [x] Add yamlfmt for YAML file formatting
+- [x] Add taplo for TOML file formatting and linting
+- [x] Test pre-commit hook installation and execution
+
+**Implementation Details:**
+
+- Added git-hooks.nix input to flake.nix inputs
+- Configured comprehensive git-hooks.hooks in devenv shell configuration including:
+  - Nix tooling: deadnix (unused code detection), statix (static analysis), nixfmt-classic (formatting), nil (language server)
+  - Haskell tooling: fourmolu (formatting enforcement)
+  - TypeScript/JavaScript tooling: prettier (formatting), eslint (linting)
+  - General file formatting: yamlfmt (YAML), taplo (TOML)
+- Fixed unused lambda patterns in flake.nix identified by deadnix (removed unused devenv-root, config, self', inputs', system parameters)
+- Successfully tested pre-commit hook installation and execution with all hooks passing
+- Verified hooks run automatically and catch formatting/linting issues
+- All hooks are working correctly and will run automatically on git commits
 
 ### Section 5: Git Configuration
+
 - [ ] Update `.gitignore` with comprehensive development artifacts:
   - [ ] Nix build outputs (`result`, `result-*`)
   - [ ] Direnv cache (`.direnv/`)
@@ -90,6 +113,7 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
   - [ ] Editor temporary files
 
 ### Section 6: Documentation Updates
+
 - [ ] Update `README.md` with:
   - [ ] Prerequisites section (Nix installation, direnv setup)
   - [ ] Initial setup instructions
@@ -105,6 +129,7 @@ Set up a comprehensive Nix flake with devenv.sh for the Haskell learning platfor
   - [ ] Environment troubleshooting tips
 
 ### Section 7: Testing and Validation
+
 - [ ] Test complete environment setup from scratch
 - [ ] Verify all tools are accessible and working
 - [ ] Test pre-commit hooks trigger correctly
@@ -126,7 +151,7 @@ cult/
 ├── flake.nix           # Main Nix flake with devenv configuration
 ├── .envrc              # Direnv configuration for automatic activation
 ├── .gitignore          # Updated with all development artifacts
-├── README.md           # Updated with setup and usage instructions  
+├── README.md           # Updated with setup and usage instructions
 ├── CLAUDE.md           # Updated with development tools reference
 └── .claude/
     └── tasks/

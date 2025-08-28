@@ -9,21 +9,27 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
     devenv.url = "github:cachix/devenv";
+    git-hooks.url = "github:cachix/git-hooks.nix";
   };
 
   nixConfig = {
-    extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
+    extra-trusted-public-keys =
+      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = inputs@{ flake-parts, devenv-root, ... }:
+  outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        inputs.devenv.flakeModule
+      imports = [ inputs.devenv.flakeModule ];
+      systems = [
+        "x86_64-linux"
+        "i686-linux"
+        "x86_64-darwin"
+        "aarch64-linux"
+        "aarch64-darwin"
       ];
-      systems = [ "x86_64-linux" "i686-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
 
-      perSystem = { config, self', inputs', pkgs, system, ... }: {
+      perSystem = { pkgs, ... }: {
         # Per-system attributes can be defined here. The self' and inputs'
         # module parameters provide easy access to attributes of the same
         # system.
@@ -37,10 +43,7 @@
             # ./devenv-foo.nix
           ];
 
-          packages = with pkgs; [
-            hlint
-            fourmolu
-          ];
+          packages = with pkgs; [ hlint fourmolu nil ];
 
           languages = {
             nix.enable = true;
@@ -61,8 +64,29 @@
             STACK_IN_NIX_SHELL = "1";
           };
 
+          git-hooks.hooks = {
+            # Nix-specific hooks
+            deadnix.enable = true;
+            statix.enable = true;
+            nixfmt-classic.enable = true;
+            nil.enable = true;
+
+            # Haskell hooks
+            fourmolu.enable = true;
+
+            # TypeScript/JavaScript hooks
+            prettier.enable = true;
+            eslint.enable = true;
+
+            # YAML formatting
+            yamlfmt.enable = true;
+
+            # Markdown
+            taplo.enable = true;
+          };
+
           process.manager.implementation = "process-compose";
-          containers = pkgs.lib.mkForce {};
+          containers = pkgs.lib.mkForce { };
         };
 
       };
