@@ -60,13 +60,198 @@ The repository currently contains only documentation files:
 
 ## Development Environment
 
-The project uses Nix Flakes with devenv for reproducible development environments. Key components:
+The project uses Nix Flakes with devenv for reproducible development environments. The environment is automatically activated via direnv when entering the project directory.
+
+### Core Components
 
 - **Nix Flakes**: Provides declarative, reproducible builds and development environments
 - **devenv**: Simplifies Nix-based development environment configuration
-- **Configuration Reference**: Complete devenv options documented at https://raw.githubusercontent.com/cachix/devenv/refs/heads/main/docs/reference/options.md
+- **direnv**: Automatic environment activation when entering project directory
+- **git-hooks.nix**: Declarative pre-commit hooks integrated with the development environment
 
-The development environment includes Haskell toolchain (GHC, cabal-install, Stack), language servers, and other development tools configured in `devenv.nix`.
+### Available Development Tools
+
+**Haskell Toolchain:**
+
+- `ghc` - Glasgow Haskell Compiler (latest stable)
+- `stack` - Haskell project management and build tool
+- `haskell-language-server` - IDE support and diagnostics
+- `hlint` - Static analysis and linting for Haskell code
+- `fourmolu` - Consistent code formatting for Haskell
+
+**TypeScript/JavaScript Toolchain:**
+
+- `node` - Node.js runtime (LTS version)
+- `pnpm` - Fast, efficient package manager
+- `tsc` - TypeScript compiler
+- `eslint` - Code quality and linting for JS/TS
+- `prettier` - Code formatting for JS/TS/JSON/YAML/MD
+
+**Additional Tools:**
+
+- `yamlfmt` - YAML file formatting
+- `taplo` - TOML formatting and linting
+- `deadnix` - Unused Nix code detection
+- `statix` - Static analysis for Nix expressions
+- `nixfmt-classic` - Nix code formatting
+- `nil` - Nix language server for diagnostics
+
+### Code Formatting Commands
+
+Use these commands for consistent code formatting:
+
+**Haskell:**
+
+```bash
+# Format single file
+fourmolu --mode inplace src/MyModule.hs
+
+# Format all Haskell files
+find . -name "*.hs" -not -path "./.stack-work/*" -exec fourmolu --mode inplace {} \;
+```
+
+**TypeScript/JavaScript:**
+
+```bash
+# Format with prettier
+pnpm exec prettier --write "src/**/*.{ts,tsx,js,jsx,json,yaml,yml,md}"
+
+# Lint with eslint
+pnpm exec eslint "src/**/*.{ts,tsx,js,jsx}" --fix
+```
+
+**Nix:**
+
+```bash
+# Format Nix configuration files
+nixfmt-classic flake.nix devenv.nix
+```
+
+### Linting and Quality Check Commands
+
+**Haskell:**
+
+```bash
+# Run hlint for static analysis
+hlint src/
+
+# Check with GHC
+stack build --fast --ghc-options="-Wall -Wextra"
+```
+
+**TypeScript:**
+
+```bash
+# Type checking
+pnpm exec tsc --noEmit
+
+# Linting
+pnpm exec eslint "src/**/*.{ts,tsx,js,jsx}"
+```
+
+**Nix:**
+
+```bash
+# Check for unused code
+deadnix flake.nix
+
+# Static analysis
+statix check .
+
+# Evaluate flake
+nix flake check --impure
+```
+
+### Pre-commit Hooks Management
+
+Pre-commit hooks are automatically installed and run on every commit. They enforce code quality and formatting standards.
+
+**Installed Hooks:**
+
+- **Nix**: `deadnix`, `statix`, `nixfmt-classic`, `nil`
+- **Haskell**: `fourmolu` formatting enforcement
+- **TypeScript/JavaScript**: `prettier` formatting, `eslint` linting
+- **YAML**: `yamlfmt` formatting
+- **TOML**: `taplo` formatting and linting
+
+**Hook Commands:**
+
+```bash
+# Run all hooks manually
+pre-commit run --all-files
+
+# Run specific hook
+pre-commit run fourmolu --all-files
+pre-commit run prettier --all-files
+pre-commit run eslint --all-files
+
+# Install/reinstall hooks
+pre-commit install --install-hooks
+
+# Skip hooks for a commit (not recommended)
+git commit --no-verify -m "message"
+```
+
+### Environment Troubleshooting
+
+**Environment not loading:**
+
+```bash
+# Rebuild environment from scratch
+nix develop --impure --refresh
+
+# Clear direnv cache
+direnv reload
+
+# Re-allow direnv
+direnv allow
+```
+
+**Tools not found:**
+
+```bash
+# Verify environment is active
+echo $DEVENV_ROOT
+
+# Check available tools
+which stack
+which pnpm
+which fourmolu
+
+# Exit and re-enter shell
+exit
+nix develop --impure
+```
+
+**Pre-commit hooks failing:**
+
+```bash
+# Format code before committing
+fourmolu --mode inplace **/*.hs
+pnpm exec prettier --write "**/*.{ts,tsx,js,jsx,json,yaml,yml,md}"
+
+# Check hook status
+pre-commit run --all-files
+
+# Reinstall hooks if needed
+pre-commit clean
+pre-commit install --install-hooks
+```
+
+**Performance issues:**
+
+```bash
+# Clean Nix store
+nix store gc
+
+# Update flake inputs
+nix flake update
+
+# Check direnv cache
+ls -la .direnv/
+```
+
+The development environment is designed to be completely reproducible across different systems and provides all necessary tools for both Haskell and TypeScript development without requiring manual installation of language-specific tools.
 
 ## Next Steps
 
